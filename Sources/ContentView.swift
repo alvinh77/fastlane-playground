@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  FastlanePlayground
-//
-//  Created by Alvin He on 8/2/2025.
-//
-
 import SwiftUI
 
 struct ContentView: View {

@@ -1,0 +1,67 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Build the iOS app"
+  lane :build_tests do
+    xcodebuild(
+      buildlog_path: "Build",
+      configuration: "Debug",
+      clean: true,
+      destination: "platform=iOS Simulator,name=iPhone 16 Pro",
+      derived_data_path: "DerivedData",
+      scheme: "FastlanePlayground",
+      xcargs: "-derivedDataPath DerivedData build-for-testing",
+    )
+  end
+
+  desc "Run unit tests without rebuilding"
+  lane :run_unit_tests do
+    run_tests(
+      configuration: "Debug",
+      derived_data_path: "DerivedData",
+      device: "iPhone 16 Pro",
+      only_testing: [
+        "UnitTests"
+      ],
+      scheme: "FastlanePlayground",
+      sdk: "iphonesimulator",
+      test_without_building: true
+    )
+  end
+
+  desc "Run uitests without rebuilding"
+  lane :run_uitests do
+    run_tests(
+      configuration: "Debug",
+      derived_data_path: "DerivedData",
+      device: "iPhone 16 Pro",
+      only_testing: [
+        "UITests"
+      ],
+      scheme: "FastlanePlayground",
+      sdk: "iphonesimulator",
+      test_without_building: true
+    )
+  end
+
+  desc "Build and run tests"
+  lane :build_and_run_tests do
+    build_tests
+    run_tests
+  end
+end
