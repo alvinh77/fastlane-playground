@@ -65,7 +65,20 @@ targets:
     dependencies:
       - target: Codes
     settings:
-      PRODUCT_BUNDLE_IDENTIFIER: "com.alvinh.FastlanePlayground"
+      PRODUCT_BUNDLE_IDENTIFIER: "com.alvinh.unittests"
+      GENERATE_INFOPLIST_FILE: YES
+      SWIFT_STRICT_CONCURRENCY: complete
+      SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: NO
+      SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD: NO
+  UITests:
+    type: bundle.ui-testing
+    platform: iOS
+    supportedDestinations: [iOS]
+    sources: ./UITests
+    dependencies:
+      - target: Codes
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: "com.alvinh.uitests"
       GENERATE_INFOPLIST_FILE: YES
       SWIFT_STRICT_CONCURRENCY: complete
       SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: NO
@@ -79,6 +92,7 @@ schemes:
     test:
       targets:
         - UnitTests
+        - UITests
     run:
       config: Debug
       arguments:

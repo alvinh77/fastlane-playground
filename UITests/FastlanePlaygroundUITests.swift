@@ -1,10 +1,3 @@
-//
-//  FastlanePlaygroundUITests.swift
-//  FastlanePlaygroundUITests
-//
-//  Created by Alvin He on 8/2/2025.
-//
-
 import XCTest
 
 final class FastlanePlaygroundUITests: XCTestCase {
