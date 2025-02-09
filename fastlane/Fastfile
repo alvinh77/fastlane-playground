@@ -22,8 +22,8 @@ platform :ios do
       buildlog_path: "Build",
       configuration: "Debug",
       clean: true,
-      destination: "platform=iOS Simulator,name=iPhone 16 Pro",
       derived_data_path: "DerivedData",
+      destination: "platform=iOS Simulator,OS=18.2,name=iPhone 16 Pro",
       scheme: "FastlanePlayground",
       xcargs: "-derivedDataPath DerivedData build-for-testing",
     )
@@ -34,6 +34,7 @@ platform :ios do
     run_tests(
       configuration: "Debug",
       derived_data_path: "DerivedData",
+      destination: "platform=iOS Simulator,OS=18.2,name=iPhone 16 Pro",
       device: "iPhone 16 Pro",
       only_testing: [
         "UnitTests"
@@ -49,6 +50,7 @@ platform :ios do
     run_tests(
       configuration: "Debug",
       derived_data_path: "DerivedData",
+      destination: "platform=iOS Simulator,OS=18.2,name=iPhone 16 Pro",
       device: "iPhone 16 Pro",
       only_testing: [
         "UITests"
