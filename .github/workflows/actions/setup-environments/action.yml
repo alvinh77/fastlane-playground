@@ -1,0 +1,33 @@
+name: 'Setup iOS Environment'
+description: 'Set up Ruby, Bundler, and install dependencies'
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.3.0
+
+    - name: Switch to xcode 16.2
+      shell: bash
+      run: sudo xcode-select --switch /Applications/Xcode_16.2.app
+    
+    - name: Clean Derived Data
+      shell: bash
+      run: rm -rf ~/Library/Developer/Xcode/DerivedData
+
+    - name: Install Bundler
+      shell: bash
+      run: gem install bundler
+
+    - name: Install dependencies
+      shell: bash
+      run: bundle install
+
+    - name: Install XcodeGen
+      shell: bash
+      run: brew install xcodegen
+
+    - name: Generate Xcode project
+      shell: bash
+      run: xcodegen generate
