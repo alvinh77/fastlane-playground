@@ -40,7 +40,6 @@ platform :ios do
         "UnitTests"
       ],
       scheme: "FastlanePlayground",
-      sdk: "iphonesimulator",
       test_without_building: true
     )
   end
@@ -56,7 +55,6 @@ platform :ios do
         "UITests"
       ],
       scheme: "FastlanePlayground",
-      sdk: "iphonesimulator",
       test_without_building: true
     )
   end
