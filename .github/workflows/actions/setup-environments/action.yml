@@ -3,22 +3,42 @@ description: 'Set up Ruby, Bundler, and install dependencies'
 runs:
   using: "composite"
   steps:
-    - name: Set up Ruby
+    - name: Setup Ruby
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: 3.3.0
 
-    - name: Switch to xcode 16.2
+    - name: Switch to Xcode 16.2
       shell: bash
       run: sudo xcode-select --switch /Applications/Xcode_16.2.app
     
-    - name: Clean Derived Data
-      shell: bash
-      run: rm -rf ~/Library/Developer/Xcode/DerivedData
+    - name: Cache Bundler Installation
+      uses: actions/cache@v4
+      with:
+        path: vendor/bundle
+        key: bundler-cache-${{ runner.os }}-${{ hashFiles('Gemfile.lock') }}
+        restore-keys: bundler-cache-${{ runner.os }}-
+    
+    - name: Cache Derived Data
+      id: cache-derived-data
+      uses: actions/cache@v4
+      with:
+        path: derived_data
+        key: derived-data-${{ runner.os }}-#${{ github.run_number }}
+    
+    - name: Cache SPM Data
+      id: cache-spm-data
+      uses: actions/cache@v4
+      with:
+        path: packages_cache
+        key: packages-cache-${{ runner.os }}-${{ hashFiles('project.yml') }}
+        restore-keys: packages-cache-${{ runner.os }}-
 
     - name: Install Bundler
       shell: bash
-      run: gem install bundler
+      run: |
+        gem install bundler
+        bundle config set --local path 'vendor/bundle'
 
     - name: Install dependencies
       shell: bash

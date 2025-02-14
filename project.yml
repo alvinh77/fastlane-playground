@@ -29,6 +29,10 @@ settings:
 ############
 ## Packages
 ############
+packages:
+  Firebase:
+    url: https://github.com/firebase/firebase-ios-sdk.git
+    from: 11.8.1
 
 ############
 ## Targets
@@ -57,6 +61,10 @@ targets:
           UIInterfaceOrientationLandscapeRight
         ]
         UILaunchStoryboardName: LaunchScreen.storyboard
+    dependencies:
+      - package: Firebase
+        products:
+          - FirebaseCore
   UnitTests:
     type: bundle.unit-test
     platform: iOS
@@ -64,6 +72,9 @@ targets:
     sources: ./UnitTests
     dependencies:
       - target: Codes
+      - package: Firebase
+        products:
+          - FirebaseCore
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: "com.alvinh.unittests"
       GENERATE_INFOPLIST_FILE: YES
@@ -77,6 +88,9 @@ targets:
     sources: ./UITests
     dependencies:
       - target: Codes
+      - package: Firebase
+        products:
+          - FirebaseCore
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: "com.alvinh.uitests"
       GENERATE_INFOPLIST_FILE: YES
