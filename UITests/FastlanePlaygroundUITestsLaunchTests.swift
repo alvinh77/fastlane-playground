@@ -1,3 +1,4 @@
+import FirebaseCore
 import XCTest
 
 final class FastlanePlaygroundUITestsLaunchTests: XCTestCase {

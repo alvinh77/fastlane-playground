@@ -15,53 +15,57 @@
 
 default_platform(:ios)
 
+# Constant Values
+BUILD_DATA_PATH = "build"
+DERIVED_DATA_PATH = "derived_data"
+DESTINATION = "platform=iOS Simulator,OS=18.2,name=iPhone 16 Pro"
+PACKAGES_PATH = "packages_cache"
+
 platform :ios do
   desc "Build the iOS app"
   lane :build_tests do
     xcodebuild(
-      buildlog_path: "Build",
+      buildlog_path: "#{BUILD_DATA_PATH}",
       configuration: "Debug",
-      clean: true,
-      derived_data_path: "DerivedData",
       destination: "platform=iOS Simulator,OS=18.2,name=iPhone 16 Pro",
       scheme: "FastlanePlayground",
-      xcargs: "-derivedDataPath DerivedData build-for-testing",
+      xcargs: "-derivedDataPath #{DERIVED_DATA_PATH} -clonedSourcePackagesDirPath #{PACKAGES_PATH} build-for-testing"
     )
   end
 
   desc "Run unit tests without rebuilding"
   lane :run_unit_tests do
-    run_tests(
+    scan(
+      buildlog_path: "#{BUILD_DATA_PATH}",
       configuration: "Debug",
-      derived_data_path: "DerivedData",
-      destination: "platform=iOS Simulator,OS=18.2,name=iPhone 16 Pro",
-      device: "iPhone 16 Pro",
+      derived_data_path: "#{DERIVED_DATA_PATH}",
+      destination: "#{DESTINATION}",
       only_testing: [
         "UnitTests"
       ],
+      output_types: "junit",
       scheme: "FastlanePlayground",
-      test_without_building: true
+      test_without_building: true,
+      cloned_source_packages_path: "#{PACKAGES_PATH}",
+      disable_package_automatic_updates: true
     )
   end
 
   desc "Run uitests without rebuilding"
   lane :run_uitests do
-    run_tests(
+    scan(
+      buildlog_path: "#{BUILD_DATA_PATH}",
       configuration: "Debug",
-      derived_data_path: "DerivedData",
-      destination: "platform=iOS Simulator,OS=18.2,name=iPhone 16 Pro",
-      device: "iPhone 16 Pro",
+      derived_data_path: "#{DERIVED_DATA_PATH}",
+      destination: "#{DESTINATION}",
       only_testing: [
         "UITests"
       ],
+      output_types: "junit",
       scheme: "FastlanePlayground",
-      test_without_building: true
+      test_without_building: true,
+      cloned_source_packages_path: "#{PACKAGES_PATH}",
+      disable_package_automatic_updates: true
     )
-  end
-
-  desc "Build and run tests"
-  lane :build_and_run_tests do
-    build_tests
-    run_tests
   end
 end

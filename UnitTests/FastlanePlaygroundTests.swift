@@ -1,5 +1,6 @@
-import Testing
 @testable import Codes
+import FirebaseCore
+import Testing
 
 struct FastlanePlaygroundTests {
     @Test func example() async throws {
