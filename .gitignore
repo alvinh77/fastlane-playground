@@ -97,3 +97,7 @@ iOSInjectionProject/
 # XcodeGen
 *.xcodeproj
 *.swiftpm
+
+# Bundle
+.vendor/
+.bundle/
