@@ -1,5 +1,6 @@
-gem install bundler
+gem install bundler cocoapods
+brew install xcodegen
 bundle config set --local path '.vendor/bundle'
 bundle install
-brew install xcodegen
 xcodegen generate
+pod install

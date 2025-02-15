@@ -1,3 +1,4 @@
+import FacebookCore
 import FirebaseCore
 import SwiftUI
 

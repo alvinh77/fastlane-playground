@@ -33,6 +33,14 @@ runs:
         path: packages_cache
         key: packages-cache-${{ runner.os }}-${{ hashFiles('project.yml') }}
         restore-keys: packages-cache-${{ runner.os }}-
+    
+    - name: Cache Pod Data
+      id: cache-pods-data
+      uses: actions/cache@v4
+      with:
+        path: Pods
+        key: pod-cache-${{ runner.os }}-${{ hashFiles('Podfile.lock') }}
+        restore-keys: pod-cache-${{ runner.os }}-
 
     - name: Bootstrap
       shell: bash

@@ -20,6 +20,8 @@ BUILD_DATA_PATH = "build"
 DERIVED_DATA_PATH = "derived_data"
 DESTINATION = "platform=iOS Simulator,OS=18.2,name=iPhone 16 Pro"
 PACKAGES_PATH = "packages_cache"
+SCHEME = "FastlanePlayground"
+WORKSPACE = "FastlanePlayground.xcworkspace"
 
 platform :ios do
   desc "Build the iOS app"
@@ -28,7 +30,8 @@ platform :ios do
       buildlog_path: "#{BUILD_DATA_PATH}",
       configuration: "Debug",
       destination: "platform=iOS Simulator,OS=18.2,name=iPhone 16 Pro",
-      scheme: "FastlanePlayground",
+      scheme: SCHEME,
+      workspace: WORKSPACE,
       xcargs: "-derivedDataPath #{DERIVED_DATA_PATH} -clonedSourcePackagesDirPath #{PACKAGES_PATH} build-for-testing"
     )
   end
@@ -44,10 +47,11 @@ platform :ios do
         "UnitTests"
       ],
       output_types: "junit",
-      scheme: "FastlanePlayground",
+      scheme: SCHEME,
       test_without_building: true,
       cloned_source_packages_path: "#{PACKAGES_PATH}",
-      disable_package_automatic_updates: true
+      disable_package_automatic_updates: true,
+      workspace: WORKSPACE
     )
   end
 
@@ -62,10 +66,11 @@ platform :ios do
         "UITests"
       ],
       output_types: "junit",
-      scheme: "FastlanePlayground",
+      scheme:SCHEME,
       test_without_building: true,
       cloned_source_packages_path: "#{PACKAGES_PATH}",
-      disable_package_automatic_updates: true
+      disable_package_automatic_updates: true,
+      workspace: WORKSPACE
     )
   end
 end
