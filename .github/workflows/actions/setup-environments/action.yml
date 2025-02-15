@@ -15,7 +15,7 @@ runs:
     - name: Cache Bundler Installation
       uses: actions/cache@v4
       with:
-        path: vendor/bundle
+        path: .vendor/bundle
         key: bundler-cache-${{ runner.os }}-${{ hashFiles('Gemfile.lock') }}
         restore-keys: bundler-cache-${{ runner.os }}-
     
@@ -34,20 +34,6 @@ runs:
         key: packages-cache-${{ runner.os }}-${{ hashFiles('project.yml') }}
         restore-keys: packages-cache-${{ runner.os }}-
 
-    - name: Install Bundler
+    - name: Bootstrap
       shell: bash
-      run: |
-        gem install bundler
-        bundle config set --local path 'vendor/bundle'
-
-    - name: Install dependencies
-      shell: bash
-      run: bundle install
-
-    - name: Install XcodeGen
-      shell: bash
-      run: brew install xcodegen
-
-    - name: Generate Xcode project
-      shell: bash
-      run: xcodegen generate
+      run: scripts/bootstrap.sh
