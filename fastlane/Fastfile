@@ -19,7 +19,9 @@ default_platform(:ios)
 BUILD_DATA_PATH = "build"
 DERIVED_DATA_PATH = "derived_data"
 DESTINATION = "platform=iOS Simulator,OS=18.2,name=iPhone 16 Pro"
+OUTPUT_DIRECTORY = "outputs"
 PACKAGES_PATH = "packages_cache"
+RESULT_BUNDLE_PATH = "outputs/TestResults.xcresult"
 SCHEME = "FastlanePlayground"
 WORKSPACE = "FastlanePlayground.xcworkspace"
 
@@ -27,7 +29,7 @@ platform :ios do
   desc "Build the iOS app"
   lane :build_tests do
     xcodebuild(
-      buildlog_path: "#{BUILD_DATA_PATH}",
+      buildlog_path: BUILD_DATA_PATH,
       configuration: "Debug",
       destination: "platform=iOS Simulator,OS=18.2,name=iPhone 16 Pro",
       scheme: SCHEME,
@@ -39,17 +41,19 @@ platform :ios do
   desc "Run unit tests without rebuilding"
   lane :run_unit_tests do
     scan(
-      buildlog_path: "#{BUILD_DATA_PATH}",
+      buildlog_path: BUILD_DATA_PATH,
       configuration: "Debug",
-      derived_data_path: "#{DERIVED_DATA_PATH}",
-      destination: "#{DESTINATION}",
+      derived_data_path: DERIVED_DATA_PATH,
+      destination: DESTINATION,
       only_testing: [
         "UnitTests"
       ],
-      output_types: "junit",
+      output_directory: OUTPUT_DIRECTORY,
+      output_types: "html,junit",
+      result_bundle_path: RESULT_BUNDLE_PATH,
       scheme: SCHEME,
       test_without_building: true,
-      cloned_source_packages_path: "#{PACKAGES_PATH}",
+      cloned_source_packages_path: PACKAGES_PATH,
       disable_package_automatic_updates: true,
       workspace: WORKSPACE
     )
@@ -58,17 +62,19 @@ platform :ios do
   desc "Run uitests without rebuilding"
   lane :run_uitests do
     scan(
-      buildlog_path: "#{BUILD_DATA_PATH}",
+      buildlog_path: BUILD_DATA_PATH,
       configuration: "Debug",
-      derived_data_path: "#{DERIVED_DATA_PATH}",
-      destination: "#{DESTINATION}",
+      derived_data_path: DERIVED_DATA_PATH,
+      destination: DESTINATION,
       only_testing: [
         "UITests"
       ],
-      output_types: "junit",
+      output_directory: OUTPUT_DIRECTORY,
+      output_types: "html,junit",
+      result_bundle_path: RESULT_BUNDLE_PATH,
       scheme:SCHEME,
       test_without_building: true,
-      cloned_source_packages_path: "#{PACKAGES_PATH}",
+      cloned_source_packages_path: PACKAGES_PATH,
       disable_package_automatic_updates: true,
       workspace: WORKSPACE
     )
