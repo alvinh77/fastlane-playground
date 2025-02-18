@@ -1,4 +1,4 @@
-@testable import Codes
+import Codes
 import FirebaseCore
 import Testing
 

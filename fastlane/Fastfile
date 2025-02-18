@@ -30,7 +30,7 @@ platform :ios do
   lane :build_tests do
     xcodebuild(
       buildlog_path: BUILD_DATA_PATH,
-      configuration: "Debug",
+      configuration: "Release",
       destination: "platform=iOS Simulator,OS=18.2,name=iPhone 16 Pro",
       scheme: SCHEME,
       workspace: WORKSPACE,
@@ -42,7 +42,7 @@ platform :ios do
   lane :run_unit_tests do
     scan(
       buildlog_path: BUILD_DATA_PATH,
-      configuration: "Debug",
+      configuration: "Release",
       derived_data_path: DERIVED_DATA_PATH,
       destination: DESTINATION,
       only_testing: [
@@ -63,7 +63,7 @@ platform :ios do
   lane :run_uitests do
     scan(
       buildlog_path: BUILD_DATA_PATH,
-      configuration: "Debug",
+      configuration: "Release",
       derived_data_path: DERIVED_DATA_PATH,
       destination: DESTINATION,
       only_testing: [
