@@ -28,13 +28,15 @@ WORKSPACE = "FastlanePlayground.xcworkspace"
 platform :ios do
   desc "Build the iOS app"
   lane :build_tests do
-    xcodebuild(
+    scan(
       buildlog_path: BUILD_DATA_PATH,
+      build_for_testing: true,
+      cloned_source_packages_path: PACKAGES_PATH,
       configuration: "Debug",
+      derived_data_path: DERIVED_DATA_PATH,
       destination: "platform=iOS Simulator,OS=18.2,name=iPhone 16 Pro",
       scheme: SCHEME,
-      workspace: WORKSPACE,
-      xcargs: "-derivedDataPath #{DERIVED_DATA_PATH} -clonedSourcePackagesDirPath #{PACKAGES_PATH} build-for-testing"
+      workspace: WORKSPACE
     )
   end
 
@@ -49,7 +51,7 @@ platform :ios do
         "UnitTests"
       ],
       output_directory: OUTPUT_DIRECTORY,
-      output_types: "html,junit",
+      output_types: "junit",
       result_bundle_path: RESULT_BUNDLE_PATH,
       scheme: SCHEME,
       test_without_building: true,
@@ -70,7 +72,7 @@ platform :ios do
         "UITests"
       ],
       output_directory: OUTPUT_DIRECTORY,
-      output_types: "html,junit",
+      output_types: "junit",
       result_bundle_path: RESULT_BUNDLE_PATH,
       scheme:SCHEME,
       test_without_building: true,
