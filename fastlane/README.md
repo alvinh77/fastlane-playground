@@ -31,22 +31,6 @@ Build the iOS app
 
 Run unit tests without rebuilding
 
-### ios run_uitests
-
-```sh
-[bundle exec] fastlane ios run_uitests
-```
-
-Run uitests without rebuilding
-
-### ios build_and_run_tests
-
-```sh
-[bundle exec] fastlane ios build_and_run_tests
-```
-
-Build and run tests
-
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.

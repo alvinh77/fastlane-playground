@@ -101,3 +101,12 @@ iOSInjectionProject/
 # Bundle
 .vendor/
 .bundle/
+
+# Cache
+.caches/
+caches/
+derived_data/
+outputs/
+packages_cache/
+build_outputs/
+test_outputs/

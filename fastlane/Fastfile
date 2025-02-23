@@ -18,10 +18,11 @@ default_platform(:ios)
 # Constant Values
 BUILD_DATA_PATH = "build"
 DERIVED_DATA_PATH = "derived_data"
-DESTINATION = "platform=iOS Simulator,OS=18.2,name=iPhone 16 Pro"
-OUTPUT_DIRECTORY = "outputs"
+BUILD_OUTPUT_DIRECTORY = "build_outputs"
+TEST_OUTPUT_DIRECTORY = "test_outputs"
 PACKAGES_PATH = "packages_cache"
-RESULT_BUNDLE_PATH = "outputs/TestResults.xcresult"
+RESULT_BUNDLE_PATH = "test_outputs/TestResults.xcresult"
+DESTINATION = "platform=iOS Simulator,OS=18.2,name=iPhone 16 Pro"
 SCHEME = "FastlanePlayground"
 WORKSPACE = "FastlanePlayground.xcworkspace"
 
@@ -34,51 +35,51 @@ platform :ios do
       cloned_source_packages_path: PACKAGES_PATH,
       configuration: "Debug",
       derived_data_path: DERIVED_DATA_PATH,
-      destination: "platform=iOS Simulator,OS=18.2,name=iPhone 16 Pro",
+      destination: DESTINATION,
+      output_directory: BUILD_OUTPUT_DIRECTORY,
+      output_xctestrun: true,
       scheme: SCHEME,
       workspace: WORKSPACE
+    )
+    copy_artifacts(
+      target_path: BUILD_OUTPUT_DIRECTORY,
+      artifacts: ["#{DERIVED_DATA_PATH}/Build/Products/*"]
     )
   end
 
   desc "Run unit tests without rebuilding"
   lane :run_unit_tests do
+    ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "5"
+    ENV["FASTLANE_XCODEBUILD_SETTINGS_RETRIES"] = "15"
     scan(
-      buildlog_path: BUILD_DATA_PATH,
-      configuration: "Debug",
-      derived_data_path: DERIVED_DATA_PATH,
       destination: DESTINATION,
       only_testing: [
         "UnitTests"
       ],
-      output_directory: OUTPUT_DIRECTORY,
+      output_directory: TEST_OUTPUT_DIRECTORY,
       output_types: "junit",
       result_bundle_path: RESULT_BUNDLE_PATH,
-      scheme: SCHEME,
+      skip_package_dependencies_resolution: true,
       test_without_building: true,
-      cloned_source_packages_path: PACKAGES_PATH,
-      disable_package_automatic_updates: true,
-      workspace: WORKSPACE
+      xctestrun: "#{BUILD_OUTPUT_DIRECTORY}/settings.xctestrun"
     )
   end
 
-  desc "Run uitests without rebuilding"
-  lane :run_uitests do
+  desc "Run ui tests without rebuilding"
+  lane :run_ui_tests do
+    ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "5"
+    ENV["FASTLANE_XCODEBUILD_SETTINGS_RETRIES"] = "15"
     scan(
-      buildlog_path: BUILD_DATA_PATH,
-      configuration: "Debug",
-      derived_data_path: DERIVED_DATA_PATH,
       destination: DESTINATION,
       only_testing: [
         "UITests"
       ],
-      output_directory: OUTPUT_DIRECTORY,
+      output_directory: TEST_OUTPUT_DIRECTORY,
       output_types: "junit",
       result_bundle_path: RESULT_BUNDLE_PATH,
-      scheme:SCHEME,
+      skip_package_dependencies_resolution: true,
       test_without_building: true,
-      cloned_source_packages_path: PACKAGES_PATH,
-      disable_package_automatic_updates: true,
-      workspace: WORKSPACE
+      xctestrun: "#{BUILD_OUTPUT_DIRECTORY}/settings.xctestrun"
     )
   end
 end

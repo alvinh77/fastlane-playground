@@ -4,3 +4,4 @@ bundle config set --local path '.vendor/bundle'
 bundle install
 xcodegen generate
 pod install
+mkdir -p build_outputs
